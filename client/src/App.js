@@ -1,49 +1,72 @@
-import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+
 function useWebSocket() {
-  // Define two pieces of state using the useState hook.
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState(null);
+  const [socket, setSocket] = useState(null);
 
-  // Use the useEffect hook to set up the WebSocket connection when the component mounts.
   useEffect(() => {
-    // Create a new socket connection to the server.
-    const socket = io('http://localhost:3000');
+    const newSocket = io('http://localhost:3000');
+    setSocket(newSocket);
 
-    // Set up event listeners for different socket events.
-    socket.on('connect', () => {
+    newSocket.on('connect', () => {
       console.log('Connected to server!');
     });
 
-    socket.on('disconnect', () => {
+    newSocket.on('disconnect', () => {
       console.log('Disconnected from server');
     });
 
-    socket.on('error', (error) => {
-      // Set the error state if an error occurs.
+    newSocket.on('error', (error) => {
       setError(error);
     });
 
-    socket.on('message', (message) => {
-      // When a new message is received, update the 'messages' state to include the new message.
+    newSocket.on('message', (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
-    // Return a cleanup function that will be called when the component unmounts.
     return () => {
-      // Disconnect the socket to prevent memory leaks.
-      socket.disconnect();
+      newSocket.disconnect();
     };
-  }, []); // The empty array [] means the effect will run only once, similar to componentDidMount.
+  }, []);
 
-  // Define a function to send a message using the socket.
   const sendMessage = (message) => {
-    if (socket.connected) {
-      // Send the message using the 'send' method provided by the socket.
+    if (socket && socket.connected) {
       socket.send(message);
     }
   };
 
-  // Return an object containing the 'messages' state, 'sendMessage' function, and 'error' state.
   return { messages, sendMessage, error };
 }
+
+function App() {
+  const { messages, sendMessage, error } = useWebSocket();
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <div>
+      <ul>
+        {messages.map((message, index) => (
+          <li key={index}>{message}</li>
+        ))}
+      </ul>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          const messageInput = event.target.elements.message;
+          sendMessage(messageInput.value);
+          messageInput.value = '';
+        }}
+      >
+        <input name="message" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  );
+}
+
+export default App;
