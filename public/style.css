@@ -26,6 +26,11 @@ section.chat__section {
   display: flex;
   align-items: center;
 }
+.logo img {
+  border-radius: 50%;
+  height: 30px;
+  mix-blend-mode: multiply;
+}
 .logo h1 {
   text-transform: uppercase;
   font-size: 20px;
@@ -40,8 +45,10 @@ section.chat__section {
   overflow-y: auto;
   padding-top: 40px;
 }
+
 textarea {
   width: 100%;
+
   border: none;
   padding: 20px;
   font-size: 16px;
@@ -59,6 +66,7 @@ textarea {
 .incoming {
   background: #8f8be8;
   color: #fff;
+  margin-right: auto;
 }
 .outgoing {
   background: #e9eafd;
