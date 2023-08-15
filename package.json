@@ -12,10 +12,12 @@
   },
   "keywords": [],
   "author": "",
-  "type": "module",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/venaxin/ChronoChat/issues"
   },
-  "homepage": "https://github.com/venaxin/ChronoChat#readme"
+  "homepage": "https://github.com/venaxin/ChronoChat#readme",
+  "dependencies": {
+    "socket.io": "^4.7.2"
+  }
 }
