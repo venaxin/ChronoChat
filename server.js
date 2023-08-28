@@ -25,6 +25,6 @@ io.on("connection", (socket) => {
   console.log("Connected...");
 
   socket.on("message", (msg) => {
-    socket.broadcast.emit('message', msg)
+    socket.broadcast.emit("message", msg);
   });
 });
