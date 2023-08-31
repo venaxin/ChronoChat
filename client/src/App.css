@@ -92,13 +92,13 @@ body {
   position: relative;
   cursor: pointer;
 }
-.chat-header img {
+/* .chat-header img {
   
   align-self: center;
   mix-blend-mode: multiply;
   height: 50px;
   width: 50px;
-}
+} */
 .chat-window .chat-header p {
   display: block;
   padding: 0 1em 0 2em;

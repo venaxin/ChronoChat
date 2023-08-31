@@ -32,7 +32,7 @@ function Chat({ socket, username, room }) {
     <>
       <div className="chat-window">
         <div className="chat-header">
-          <img alt="" />
+          <img src="logo.gif" alt="Logo" className="logo" />
           <p>ChronoChat</p>
         </div>
         <div className="chat-body">
